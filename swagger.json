@@ -17,7 +17,7 @@
     ],
     "servers": [
         {
-            "url": "https://aqua-track-api.onrender.com"
+            "url": "https://rent-camper-api.onrender.com/"
         }
     ],
     "tags": [
