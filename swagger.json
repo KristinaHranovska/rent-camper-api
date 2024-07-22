@@ -1,61 +1,102 @@
-[
-    {
-        "openapi": "3.0.0",
-        "info": {
-            "title": "Camper Rental API",
-            "version": "1.0.0",
-            "description": "API for camper rentals and reservations."
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Camper Rental API",
+        "version": "1.0.0",
+        "description": "API for renting campers and making bookings.",
+        "license": {
+            "name": "Test project GoIT",
+            "url": "https://github.com/KristinaHranovska/rent-camper"
+        }
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "servers": [
+        {
+            "url": "https://aqua-track-api.onrender.com"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Camper",
+            "description": "Get all campers with pagination support"
         },
-        "paths": {
-            "/api/campers": {
-                "get": {
-                    "summary": "Get all campers",
-                    "description": "Get all campers with pagination support.",
-                    "parameters": [
-                        {
-                            "name": "page",
-                            "in": "query",
-                            "description": "Page number for pagination",
-                            "required": false,
-                            "schema": {
-                                "type": "integer",
-                                "default": 1
-                            }
-                        },
-                        {
-                            "name": "limit",
-                            "in": "query",
-                            "description": "Number of elements per page",
-                            "required": false,
-                            "schema": {
-                                "type": "integer",
-                                "default": 4
-                            }
+        {
+            "name": "Booking",
+            "description": "Create a new camper reservation"
+        }
+    ],
+    "paths": {
+        "/rent": {
+            "get": {
+                "tags": [
+                    "Camper"
+                ],
+                "summary": "Retrieve a list of campers with pagination",
+                "description": "Retrieve a list of campers with pagination support.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number for pagination",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
                         }
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "List of campers",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/components/schemas/Camper"
-                                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Number of items per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 4
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of campers",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Camper"
                                     }
                                 }
                             }
                         }
                     }
                 }
-            },
-            "/api/books": {
-                "post": {
-                    "summary": "Book a camper",
-                    "description": "Create a new camper reservation.",
-                    "requestBody": {
-                        "required": true,
+            }
+        },
+        "/books": {
+            "post": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Create a new booking",
+                "description": "Create a new booking for a camper.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Booking"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Booking created",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -63,209 +104,225 @@
                                 }
                             }
                         }
-                    },
-                    "responses": {
-                        "201": {
-                            "description": "Reservation created",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/Booking"
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
             }
-        },
-        "components": {
-            "schemas": {
-                "Camper": {
-                    "type": "object",
-                    "properties": {
-                        "name": {
+        }
+    },
+    "components": {
+        "schemas": {
+            "Camper": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Deluxe Camper"
+                    },
+                    "price": {
+                        "type": "number",
+                        "example": 120
+                    },
+                    "rating": {
+                        "type": "number",
+                        "example": 4.5
+                    },
+                    "location": {
+                        "type": "string",
+                        "example": "Berlin"
+                    },
+                    "adults": {
+                        "type": "number",
+                        "example": 2
+                    },
+                    "children": {
+                        "type": "number",
+                        "example": 2
+                    },
+                    "engine": {
+                        "type": "string",
+                        "example": "V8"
+                    },
+                    "form": {
+                        "type": "string",
+                        "example": "SUV"
+                    },
+                    "length": {
+                        "type": "string",
+                        "example": "7m"
+                    },
+                    "width": {
+                        "type": "string",
+                        "example": "2.5m"
+                    },
+                    "height": {
+                        "type": "string",
+                        "example": "3m"
+                    },
+                    "tank": {
+                        "type": "string",
+                        "example": "50L"
+                    },
+                    "consumption": {
+                        "type": "string",
+                        "example": "10L/100km"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "A deluxe camper with all modern amenities."
+                    },
+                    "details": {
+                        "$ref": "#/components/schemas/Details"
+                    },
+                    "gallery": {
+                        "type": "array",
+                        "items": {
                             "type": "string",
-                            "example": "Deluxe Camper"
-                        },
-                        "price": {
-                            "type": "number",
-                            "example": 120
-                        },
-                        "rating": {
-                            "type": "number",
-                            "example": 4.5
-                        },
-                        "location": {
-                            "type": "string",
-                            "example": "Berlin"
-                        },
-                        "adults": {
-                            "type": "number",
-                            "example": 2
-                        },
-                        "children": {
-                            "type": "number",
-                            "example": 2
-                        },
-                        "engine": {
-                            "type": "string",
-                            "example": "V8"
-                        },
-                        "form": {
-                            "type": "string",
-                            "example": "SUV"
-                        },
-                        "length": {
-                            "type": "string",
-                            "example": "7m"
-                        },
-                        "width": {
-                            "type": "string",
-                            "example": "2.5m"
-                        },
-                        "height": {
-                            "type": "string",
-                            "example": "3m"
-                        },
-                        "tank": {
-                            "type": "string",
-                            "example": "80L"
-                        },
-                        "consumption": {
-                            "type": "string",
-                            "example": "12L/100km"
-                        },
-                        "description": {
-                            "type": "string",
-                            "example": "A deluxe camper with all modern amenities."
-                        },
-                        "details": {
-                            "$ref": "#/components/schemas/Details"
-                        },
-                        "gallery": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "reviews": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/components/schemas/Review"
-                            }
+                            "example": "http://example.com/image.jpg"
+                        }
+                    },
+                    "reviews": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Review"
                         }
                     }
-                },
-                "Details": {
-                    "type": "object",
-                    "properties": {
-                        "transmission": {
-                            "type": "string",
-                            "example": "Manual"
-                        },
-                        "airConditioner": {
-                            "type": "number",
-                            "example": 1
-                        },
-                        "ac": {
-                            "type": "number",
-                            "example": 1
-                        },
-                        "bathroom": {
-                            "type": "number",
-                            "example": 1
-                        },
-                        "kitchen": {
-                            "type": "number",
-                            "example": 1
-                        },
-                        "beds": {
-                            "type": "number",
-                            "example": 4
-                        },
-                        "tv": {
-                            "type": "number",
-                            "example": 1
-                        },
-                        "CD": {
-                            "type": "number",
-                            "example": 1
-                        },
-                        "radio": {
-                            "type": "number",
-                            "example": 1
-                        },
-                        "shower": {
-                            "type": "number",
-                            "example": 1
-                        },
-                        "toilet": {
-                            "type": "number",
-                            "example": 1
-                        },
-                        "freezer": {
-                            "type": "number",
-                            "example": 1
-                        },
-                        "hob": {
-                            "type": "number",
-                            "example": 1
-                        },
-                        "microwave": {
-                            "type": "number",
-                            "example": 1
-                        },
-                        "gas": {
-                            "type": "string",
-                            "example": "Propane"
-                        },
-                        "water": {
-                            "type": "string",
-                            "example": "100L"
-                        }
+                }
+            },
+            "Booking": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "email",
+                    "date"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the person booking the camper."
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "description": "The email of the person booking the camper."
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "The date of the booking."
+                    },
+                    "comment": {
+                        "type": "string",
+                        "description": "Additional comments for the booking."
                     }
                 },
-                "Review": {
-                    "type": "object",
-                    "properties": {
-                        "reviewer_name": {
-                            "type": "string",
-                            "example": "John Doe"
-                        },
-                        "reviewer_rating": {
-                            "type": "number",
-                            "example": 4
-                        },
-                        "comment": {
-                            "type": "string",
-                            "example": "Great camper, had an amazing experience!"
-                        }
+                "example": {
+                    "name": "John Doe",
+                    "email": "john.doe@example.com",
+                    "date": "2023-08-15",
+                    "comment": "Looking forward to the trip!"
+                }
+            },
+            "Review": {
+                "type": "object",
+                "properties": {
+                    "reviewer_name": {
+                        "type": "string",
+                        "example": "Jane Smith"
+                    },
+                    "reviewer_rating": {
+                        "type": "number",
+                        "minimum": 1,
+                        "maximum": 5,
+                        "example": 4
+                    },
+                    "comment": {
+                        "type": "string",
+                        "example": "Great camper, had a wonderful time!"
                     }
-                },
-                "Booking": {
-                    "type": "object",
-                    "properties": {
-                        "name": {
-                            "type": "string",
-                            "example": "John Doe"
-                        },
-                        "email": {
-                            "type": "string",
-                            "example": "john.doe@example.com"
-                        },
-                        "date": {
-                            "type": "string",
-                            "format": "date-time",
-                            "example": "2023-07-22T10:00:00Z"
-                        },
-                        "comment": {
-                            "type": "string",
-                            "example": "Please prepare the camper for a family trip."
-                        }
+                }
+            },
+            "Details": {
+                "type": "object",
+                "properties": {
+                    "transmission": {
+                        "type": "string",
+                        "example": "Automatic"
+                    },
+                    "airConditioner": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 1
+                    },
+                    "ac": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 1
+                    },
+                    "bathroom": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 1
+                    },
+                    "kitchen": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 1
+                    },
+                    "beds": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 2
+                    },
+                    "tv": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 1
+                    },
+                    "CD": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 1
+                    },
+                    "radio": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 1
+                    },
+                    "shower": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 1
+                    },
+                    "toilet": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 1
+                    },
+                    "freezer": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 1
+                    },
+                    "hob": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 1
+                    },
+                    "microwave": {
+                        "type": "number",
+                        "minimum": 0,
+                        "example": 1
+                    },
+                    "gas": {
+                        "type": "string",
+                        "example": "LPG"
+                    },
+                    "water": {
+                        "type": "string",
+                        "example": "100L"
                     }
                 }
             }
         }
     }
-]
+}

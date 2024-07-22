@@ -3,13 +3,21 @@ import morgan from "morgan";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
-import swaggerDocument from './swagger.js';
 import swaggerUi from 'swagger-ui-express';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import rentRouter from "./routes/rentRouter.js";
 import booksRouter from "./routes/booksRouter.js";
 
 const app = express();
 const { DB_HOST, PORT } = process.env;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const swaggerFilePath = path.resolve(__dirname, 'swagger.json');
+const swaggerDocument = JSON.parse(fs.readFileSync(swaggerFilePath, 'utf8'));
 
 app.use(morgan("tiny"));
 app.use(cors());
