@@ -5,6 +5,8 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import swaggerDocument from './swagger.js';
 import swaggerUi from 'swagger-ui-express';
+import rentRouter from "./routes/rentRouter.js";
+import booksRouter from "./routes/booksRouter.js";
 
 const app = express();
 const { DB_HOST, PORT } = process.env;

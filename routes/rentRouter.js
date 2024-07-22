@@ -1,8 +1,8 @@
 import express from "express";
-import rentCamper from "../controllers/orders/rentCamper.js";
+import rentCamper from "../controllers/rentCamper.js";
 
 const rentRouter = express.Router();
 
-orderRouter.get('/', rentCamper);
+rentRouter.get('/', rentCamper);
 
 export default rentRouter;
