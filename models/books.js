@@ -25,7 +25,7 @@ export const bookingValidationSchema = Joi.object({
     name: Joi.string().min(1).required(),
     email: Joi.string().email().required(),
     date: Joi.date().iso().required(),
-    comment: Joi.string().allow().optional()
+    comment: Joi.string().allow("").optional()
 });
 
 const Booking = model('books', bookingSchema);
