@@ -21,7 +21,6 @@ const rentCamper = async (req, res, next) => {
                 filters.details[key] = details[key];
             });
         }
-
         const total = await Camper.countDocuments(filters);
         const totalPages = Math.ceil(total / limit);
 
